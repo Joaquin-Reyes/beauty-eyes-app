@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beauty Eyes 💗</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffe6f0;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #ffb6d9;
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+.container {
+    padding: 20px;
+}
+input, button {
+    padding: 10px;
+    margin: 5px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+button {
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #ff1493;
+}
+.turno {
+    background: white;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+}
+</style>
+</head>
+<body>
+
+<header>Beauty Eyes 💗 - Gestión de Turnos</header>
+
+<div class="container">
+    <h3>Agregar Turno</h3>
+    <input type="text" id="nombre" placeholder="Nombre del cliente">
+    <input type="date" id="fecha">
+    <input type="time" id="hora">
+    <button onclick="agregarTurno()">Guardar Turno</button>
+
+    <h3>Turnos Agendados</h3>
+    <div id="listaTurnos"></div>
+</div>
+
+<script>
+let turnos = JSON.parse(localStorage.getItem("turnos")) || [];
+
+function guardarLocal() {
+    localStorage.setItem("turnos", JSON.stringify(turnos));
+}
+
+function agregarTurno() {
+    const nombre = document.getElementById("nombre").value;
+    const fecha = document.getElementById("fecha").value;
+    const hora = document.getElementById("hora").value;
+
+    if (!nombre || !fecha || !hora) {
+        alert("Completa todos los campos");
+        return;
+    }
+
+    const existe = turnos.find(t => t.fecha === fecha && t.hora === hora);
+    if (existe) {
+        alert("Ese horario ya está reservado 💗");
+        return;
+    }
+
+    turnos.push({ nombre, fecha, hora });
+    guardarLocal();
+    mostrarTurnos();
+}
+
+function eliminarTurno(index) {
+    turnos.splice(index, 1);
+    guardarLocal();
+    mostrarTurnos();
+}
+
+function mostrarTurnos() {
+    const lista = document.getElementById("listaTurnos");
+    lista.innerHTML = "";
+
+    turnos.forEach((turno, index) => {
+        lista.innerHTML += `
+            <div class="turno">
+                <strong>${turno.nombre}</strong><br>
+                ${turno.fecha} - ${turno.hora}<br>
+                <button onclick="eliminarTurno(${index})">Eliminar</button>
+            </div>
+        `;
+    });
+}
+
+mostrarTurnos();
+</script>
+
+</body>
+</html>
