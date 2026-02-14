@@ -4,112 +4,194 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Beauty Eyes 💗</title>
+<title>Beauty Eyes ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 body {
-    font-family: Arial, sans-serif;
-    background-color: #ffe6f0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ffd6e7, #ffeef5);
+    padding: 15px;
     margin: 0;
-    padding: 0;
 }
-header {
-    background-color: #ffb6d9;
-    padding: 20px;
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
+h1 { text-align:center; color:#d63384; }
+.card {
+    background:white;
+    padding:18px;
+    border-radius:18px;
+    margin-bottom:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
 }
-.container {
-    padding: 20px;
-}
-input, button {
-    padding: 10px;
-    margin: 5px 0;
-    width: 100%;
-    box-sizing: border-box;
+input {
+    padding:10px;
+    margin:6px 0;
+    width:100%;
+    border-radius:10px;
+    border:1px solid #eee;
 }
 button {
-    background-color: #ff69b4;
-    color: white;
-    border: none;
-    cursor: pointer;
+    background: linear-gradient(45deg, #ff85b3, #ff5c99);
+    border:none;
+    padding:12px;
+    border-radius:12px;
+    cursor:pointer;
+    color:white;
+    font-weight:600;
+    width:100%;
+    margin-top:8px;
 }
-button:hover {
-    background-color: #ff1493;
+.small-btn {
+    width:auto;
+    padding:6px 10px;
+    font-size:12px;
+    border-radius:8px;
 }
-.turno {
-    background: white;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 8px;
+ul { list-style:none; padding:0; }
+li {
+    background:#fff0f6;
+    margin-bottom:8px;
+    padding:10px;
+    border-radius:12px;
+}
+.hidden { display:none; }
+.reminder-btn {
+    background: #25D366;
 }
 </style>
 </head>
 <body>
 
-<header>Beauty Eyes 💗 - Gestión de Turnos</header>
+<h1>Beauty Eyes ❤️</h1>
 
-<div class="container">
-    <h3>Agregar Turno</h3>
-    <input type="text" id="nombre" placeholder="Nombre del cliente">
+<div class="card">
+    <button onclick="activarModoLashista()">Modo Lashista</button>
+</div>
+
+<div class="card hidden" id="configCard">
+    <h3>Configuración Jornada</h3>
+    <input type="time" id="inicio" value="09:00">
+    <input type="time" id="fin" value="18:00">
+    <button onclick="guardarConfiguracion()">Guardar Jornada</button>
+</div>
+
+<div class="card">
+    <h3>Agendar Turno</h3>
+    <input type="text" id="nombre" placeholder="Nombre">
+    <input type="text" id="telefono" placeholder="Telefono con codigo país (ej: 5491122334455)">
     <input type="date" id="fecha">
     <input type="time" id="hora">
     <button onclick="agregarTurno()">Guardar Turno</button>
+</div>
 
-    <h3>Turnos Agendados</h3>
-    <div id="listaTurnos"></div>
+<div class="card hidden" id="listaCard">
+    <h3>Turnos</h3>
+    <ul id="listaTurnos"></ul>
 </div>
 
 <script>
+let PIN = "1234";
+
 let turnos = JSON.parse(localStorage.getItem("turnos")) || [];
+let jornada = JSON.parse(localStorage.getItem("jornada")) || {inicio:"09:00", fin:"18:00"};
+
+document.getElementById("inicio").value = jornada.inicio;
+document.getElementById("fin").value = jornada.fin;
 
 function guardarLocal() {
     localStorage.setItem("turnos", JSON.stringify(turnos));
 }
 
-function agregarTurno() {
-    const nombre = document.getElementById("nombre").value;
-    const fecha = document.getElementById("fecha").value;
-    const hora = document.getElementById("hora").value;
+function guardarConfiguracion() {
+    jornada.inicio = document.getElementById("inicio").value;
+    jornada.fin = document.getElementById("fin").value;
+    localStorage.setItem("jornada", JSON.stringify(jornada));
+    alert("Jornada guardada");
+}
 
-    if (!nombre || !fecha || !hora) {
+function activarModoLashista() {
+    let ingreso = prompt("Ingrese PIN");
+    if (ingreso === PIN) {
+        document.getElementById("configCard").classList.remove("hidden");
+        document.getElementById("listaCard").classList.remove("hidden");
+        mostrarTurnos();
+    } else {
+        alert("PIN incorrecto");
+    }
+}
+
+function agregarTurno() {
+    let nombre = document.getElementById("nombre").value;
+    let telefono = document.getElementById("telefono").value;
+    let fecha = document.getElementById("fecha").value;
+    let hora = document.getElementById("hora").value;
+
+    if (!nombre || !telefono || !fecha || !hora) {
         alert("Completa todos los campos");
         return;
     }
 
-    const existe = turnos.find(t => t.fecha === fecha && t.hora === hora);
-    if (existe) {
-        alert("Ese horario ya está reservado 💗");
+    if (!telefono.match(/^\d+$/)) {
+        alert("El telefono debe tener solo numeros y codigo país");
         return;
     }
 
-    turnos.push({ nombre, fecha, hora });
+    if (hora < jornada.inicio || hora > jornada.fin) {
+        alert("Horario fuera de jornada laboral");
+        return;
+    }
+
+    let existe = turnos.find(t => t.fecha === fecha && t.hora === hora);
+    if (existe) {
+        alert("Ese horario ya está ocupado");
+        return;
+    }
+
+    turnos.push({nombre, telefono, fecha, hora});
     guardarLocal();
-    mostrarTurnos();
+    alert("Turno guardado");
 }
 
 function eliminarTurno(index) {
-    turnos.splice(index, 1);
+    turnos.splice(index,1);
     guardarLocal();
     mostrarTurnos();
 }
 
 function mostrarTurnos() {
-    const lista = document.getElementById("listaTurnos");
+    let lista = document.getElementById("listaTurnos");
     lista.innerHTML = "";
 
-    turnos.forEach((turno, index) => {
-        lista.innerHTML += `
-            <div class="turno">
-                <strong>${turno.nombre}</strong><br>
-                ${turno.fecha} - ${turno.hora}<br>
-                <button onclick="eliminarTurno(${index})">Eliminar</button>
-            </div>
+    turnos
+    .sort((a,b)=> new Date(a.fecha+"T"+a.hora) - new Date(b.fecha+"T"+b.hora))
+    .forEach((t,index)=>{
+
+        let turnoDate = new Date(t.fecha+"T"+t.hora);
+        let ahora = new Date();
+        let diff = turnoDate - ahora;
+        let mostrarBoton = diff <= 24*60*60*1000 && diff > 0;
+
+        let li = document.createElement("li");
+        li.innerHTML = `
+            <strong>${t.nombre}</strong><br>
+            ${t.fecha} - ${t.hora}<br>
+            ${mostrarBoton ? `<button class="reminder-btn small-btn" onclick="enviarWhatsApp('${t.telefono}','${t.hora}')">Enviar recordatorio</button>` : ""}
+            <button class="small-btn" onclick="eliminarTurno(${index})">Eliminar</button>
         `;
+        lista.appendChild(li);
     });
 }
 
-mostrarTurnos();
+function enviarWhatsApp(telefono, hora) {
+    let mensaje = encodeURIComponent(
+        "Hola, te recuerdo que mañana tenes un turno agendado a las " + hora + ". Recuerda que tenemos 15min de tolerancia, te esperamos ❤️"
+    );
+    window.open("https://wa.me/" + telefono + "?text=" + mensaje, "_blank");
+}
+
+setInterval(()=>{
+    if (!document.getElementById("listaCard").classList.contains("hidden")) {
+        mostrarTurnos();
+    }
+},60000);
 </script>
 
 </body>
