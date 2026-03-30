@@ -1,0 +1,421 @@
+/* =========================
+   RESET BÁSICO
+========================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #fafafa;
+  color: #333;
+}
+
+
+/* =========================
+   CONTENEDORES
+========================= */
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+
+/* =========================
+   TARJETAS
+========================= */
+
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  margin-top: 20px;
+}
+
+
+/* =========================
+   FORMULARIOS
+========================= */
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #f8c8dc;
+}
+
+
+/* =========================
+   BOTONES
+========================= */
+
+.button-primary {
+  margin-top: 15px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #f8c8dc;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.button-primary:hover {
+  opacity: 0.9;
+}
+
+.button-danger {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+
+/* =========================
+   HORARIOS / BOTONES SLOT
+========================= */
+
+.slot-btn {
+  margin: 5px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background: #f2f2f2;
+}
+
+.slot-btn.active {
+  background: #f8c8dc;
+}
+
+
+/* =========================
+   TABLAS
+========================= */
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.table th,
+.table td {
+  border: 1px solid #eee;
+  padding: 10px;
+  text-align: center;
+}
+
+
+/* =========================
+   CALENDARIO
+========================= */
+
+.celda-turno {
+  border: 1px solid #eee;
+  padding: 10px;
+  text-align: center;
+}
+
+.turno {
+  background: #f8c8dc;
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 13px;
+}
+
+
+/* =========================
+   TEXTOS
+========================= */
+
+h1, h2, h3 {
+  margin-bottom: 15px;
+}
+
+p {
+  margin-bottom: 10px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+  .container {
+    padding: 10px;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .table th,
+  .table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .button-primary {
+    width: 100%;
+  }
+
+}
+
+/* =========================
+   VISTA AGENDA MOBILE
+========================= */
+
+.agenda-mobile {
+  display: none;
+}
+
+.agenda-slot {
+  background: white;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.agenda-hora {
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.agenda-turno {
+  background: #f8c8dc;
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+/* =========================
+   CALENDARIO MOBILE
+========================= */
+
+.agenda-mobile {
+  display: none;
+}
+
+.agenda-slot {
+  background: white;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.agenda-hora {
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.agenda-turno {
+  background: #f8c8dc;
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+  .agenda-desktop {
+    display: none;
+  }
+
+  .agenda-mobile {
+    display: block;
+  }
+
+}
+
+/* =========================
+   FORMULARIOS
+========================= */
+
+.form-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  height: 42px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+
+/* =========================
+   TARJETAS
+========================= */
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  margin-top: 20px;
+}
+
+
+/* =========================
+   BOTONES
+========================= */
+
+.button-primary {
+  margin-top: 15px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #f8c8dc;
+  cursor: pointer;
+}
+
+
+/* botones de horarios */
+
+.slot-btn {
+  margin: 5px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background: #f2f2f2;
+  transition: 0.2s;
+}
+
+.slot-btn:hover {
+  background: #e9e9e9;
+}
+
+.slot-btn.active {
+  background: #f8c8dc;
+}
+
+
+/* =========================
+   TABLA
+========================= */
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.table td,
+.table th {
+  border: 1px solid #eee;
+  padding: 10px;
+  text-align: center;
+}
+
+.celda-turno {
+  border: 1px solid #eee;
+  padding: 10px;
+  text-align: center;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+  .form-row {
+    flex-direction: column;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .card {
+    padding: 15px;
+  }
+
+  .input {
+    height: 40px;
+  }
+
+}
+
+/* =========================
+   ACCIONES AGENDA MOBILE
+========================= */
+
+.agenda-actions {
+  margin-top: 6px;
+  display: flex;
+  gap: 6px;
+}
+
+.action-btn {
+  font-size: 11px;
+  padding: 4px 6px;
+  border-radius: 5px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+.action-btn.whatsapp {
+  background: #25D366;
+  color: white;
+}
+
+.action-btn.delete {
+  background: #ff6b6b;
+  color: white;
+}
