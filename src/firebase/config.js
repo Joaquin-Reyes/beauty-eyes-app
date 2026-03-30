@@ -3,7 +3,7 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBGnKbrVThGaAYs6JazgEc0QjKEY2GTc04",
+  apiKey: "",
   authDomain: "beauty-eyes-pro.firebaseapp.com",
   projectId: "beauty-eyes-pro",
   storageBucket: "beauty-eyes-pro.firebasestorage.app",
